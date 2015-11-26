@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">SimeplUi</string>
+    <string name="app_name">HI SimeplUi</string>
+    <string name="go1">SimeplUi</string>
+    <string name="onswitch">open</string>
+    <string name="offswitch">close</string>
 </resources>

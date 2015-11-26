@@ -31,6 +31,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
+    <TextView
+        android:text= "@string/go1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -45,10 +55,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="圖示開啟"
+            android:textOff="@string/offswitch"
+            android:textOn="@string/onswitch"
             android:id="@+id/switch1"
             android:layout_gravity="center_horizontal"
             android:checked="false"
             android:layout_weight="0.05" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Switch"
+            android:id="@+id/switch2"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.05" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:id="@+id/input" />
+
+        <CheckBox
+            android:layout_width="307dp"
+            android:layout_height="wrap_content"
+            android:text="文字隱藏"
+            android:id="@+id/hidecheckBox"
+            android:layout_weight="0.05" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            android:id="@+id/button"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.05"
+            android:onClick="submit" />
     </LinearLayout>
 
 </RelativeLayout>
