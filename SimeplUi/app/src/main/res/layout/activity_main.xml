@@ -81,7 +81,8 @@
             android:layout_height="wrap_content"
             android:text="文字隱藏"
             android:id="@+id/hidecheckBox"
-            android:layout_weight="0.05" />
+            android:layout_weight="0.05"
+            android:onClick="putcheckbok" />
 
         <Button
             android:layout_width="wrap_content"
