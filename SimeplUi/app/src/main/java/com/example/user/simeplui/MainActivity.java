@@ -6,16 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  EditText edittext ; // 建立EditText 物件
+    private EditText edittext ; // 建立EditText 物件
     private CheckBox hideCheckBox ; // 建立CheckBox 物件
+    private ListView historyListView ; //建立ListView 物件
+    private Spinner  storeInfoSpinner ; //建立Spinner 物件
 
-    // 用途儲存私有的簡單資料在鍵-值配對 簡單存放到的編輯
+
+    //用途儲存私有的簡單資料在鍵-值配對 簡單存放到的編輯
     private SharedPreferences sharedPreferences; // 轻量级的存储类的物件
     private SharedPreferences.Editor editor; // 用來編輯轻量级的存储类的物件
 
@@ -25,18 +31,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);// 指定layout檔
 
+        //
+        edittext = (EditText)findViewById(R.id.input); //    物件轉換，透過viwe的findViewById，尋找Ｒ.的ID.的名稱(ＮＡＭＥ)，可能控制此物件
+        hideCheckBox = (CheckBox)findViewById(R.id.hidecheckBox);
+        historyListView = (ListView)findViewById(R.id.historyListView);
+        storeInfoSpinner = (Spinner)findViewById(R.id.storeInofSpinner);
+
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
-        /** 第一個參數 放置檔名 第二個參數 檔案分享模式
-        * MODE_PRIVATE	該檔案是私有的，其它應用程式都無法存取（預設值）。
-        * MODE_APPEND	當該檔案存在時，資料會從後面繼續寫入，否則就建立新檔案。
-        * MODE_WORLD_READABLE	裝置內的其它應用程式都可以讀取。
-        * MODE_WORLD_WRITEABLE	裝置內的應用程式都可以寫入。
-        * MODE_MULTI_PROCESS	為一個旗標，在Android 2.3及以前，該旗標預設為開啟，允許多個行程同時存取同一個SharedPrecferences物件。而之後的Android版本，必須透過明確的將值設定後才能開啟多個行程的存取。
-        * */
+        /* 第一個參數 放置檔名 ,手機本機端(DATA\DATA\APP 專案名稱\Shared_Prefs)
+         * 第二個參數 檔案分享模式
+         * MODE_PRIVATE	該檔案是私有的，其它應用程式都無法存取（預設值）。
+         * MODE_APPEND	當該檔案存在時，資料會從後面繼續寫入，否則就建立新檔案。
+         * MODE_WORLD_READABLE	裝置內的其它應用程式都可以讀取。
+         * MODE_WORLD_WRITEABLE	裝置內的應用程式都可以寫入。
+         * MODE_MULTI_PROCESS	為一個旗標，在Android 2.3及以前，該旗標預設為開啟，允許多個行程同時存取同一個SharedPrecferences物件。而之後的Android版本，必須透過明確的將值設定後才能開啟多個行程的存取。
+         */
 
         editor = sharedPreferences.edit(); // 將原本資料提交SharedPreferences的的編輯器用
 
-        edittext = (EditText)findViewById(R.id.input); // 物件轉換，透過findViewById方式尋找Ｒ.的ID.的名稱(ＮＡＭＥ)
 
         //edittext.setText("GO input any word"); // 設定指定文字
 
@@ -58,11 +70,26 @@ public class MainActivity extends AppCompatActivity {
               }
           });
 
-
-          hideCheckBox = (CheckBox)findViewById(R.id.hidecheckBox);
           //hideCheckBox.setChecked(true);
 
+          //sethistry();
 
+        setStoreIofo();
+    }
+
+    // 定義顯示在ListView的列表上
+    private void sethistry(){
+        //String[] data = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] data = Utils.readFile(this,"history.txt").split("\n"); //字尾有＼Ｎ就會分行
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, data);
+        historyListView.setAdapter(adapter);
+    }
+
+    //
+    private  void  setStoreIofo(){
+        String[] data = getResources().getStringArray(R.array.storeInfo); // 如果你的附屬檔案放置在(res)必須呼叫getResources()
+        ArrayAdapter<String> stroeadapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,data);
+        storeInfoSpinner.setAdapter(stroeadapter);
     }
 
     // view可以跟你說 你會用到哪一個元件動作
@@ -84,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
             edittext.setText("");
         }
 
-        // sethistry();
+        sethistry();
 
-        String fileContent = Utils.readFile(this,"history.txt");// 從檔案中讀取內容
-        Toast.makeText(this, fileContent, Toast.LENGTH_LONG).show();
-        /*
+        //String fileContent = Utils.readFile(this,"history.txt");// 從檔案中讀取內容
+        //Toast.makeText(this, fileContent, Toast.LENGTH_LONG).show();
+        /* 氣泡訊息顯示
          * 參數一 指定是你的應用程式(Application)或活動(Activity)物件
          * 參數二 需要顯示文字(帶入可以是字串或是可以用到資源庫(RES)的Values的表示ex:R.string.go1)
          * 參數三 顯示時間長度
@@ -98,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
         //Toast.makeText(this,test,Toast.LENGTH_LONG).show(); // 長期顯示_顯示在螢幕上的氣泡訊息
-        /*
+        /* 氣泡訊息顯示
          * 參數一 指定是你的應用程式(Application)或活動(Activity)物件
          * 參數二 需要顯示文字(帶入可以是字串或是可以用到資源庫(RES)的Values的表示ex:R.string.go1)
          * 參數三 顯示時間長度
@@ -108,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
         //Toast.makeText(this,"132132132131321321213213",Toast.LENGTH_LONG).show(); // 短暫訊息_顯示在螢幕上的氣泡訊息
-        /*
+        /* 氣泡訊息顯示
          * 參數一 指定是你的應用程式(Application)或活動(Activity)物件
          * 參數二 需要顯示文字(帶入可以是字串或是可以用到資源庫(RES)的Values的表示ex:R.string.go1)
          * 參數三 顯示時間長度

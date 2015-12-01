@@ -22,30 +22,30 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"/>
 
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
+
     <TextView
         android:text="I am going to the  station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/input"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
-
-    <TextView
-        android:text= "@string/go1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
-
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/input"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="22dp"
@@ -70,12 +70,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.05" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.05"
-            android:id="@+id/input" />
-
         <CheckBox
             android:layout_width="307dp"
             android:layout_height="wrap_content"
@@ -92,6 +86,22 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.05"
             android:onClick="submit" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/historyListView"
+            android:layout_gravity="center_horizontal"      />
     </LinearLayout>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/storeInofSpinner"
+        android:layout_alignTop="@+id/input"
+        android:layout_toRightOf="@+id/input"
+        android:layout_toEndOf="@+id/input"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp" />
 
 </RelativeLayout>

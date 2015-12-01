@@ -24,7 +24,7 @@ public class Utils {
         try {
             FileOutputStream fos =
                     context.openFileOutput(fileName,context.MODE_APPEND);
-                    /*
+                    /* 開啟檔案並寫入，此檔案放置位址 手機本機端(DATA\DATA\APP 專案名稱\files)
                      * 第一參數 表示 要給定檔案名稱
                      * 第二參數 指定檔案寫入時可能操作模式，有四種模式
                      * Context.MODE_PRIVATE 為預設操作模式，代表該檔是私有資料，只能被應用本身訪問，在該模式下，寫入的內容會覆蓋原檔的內容，如果想把新寫入的內容追加到原檔中請使用Context.MODE_APPEND
