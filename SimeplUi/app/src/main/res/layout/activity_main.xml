@@ -49,7 +49,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="22dp"
-        android:weightSum="1">
+        android:weightSum="1"
+        >
 
         <Switch
             android:layout_width="match_parent"
@@ -70,28 +71,60 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.05" />
 
-        <CheckBox
-            android:layout_width="307dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="文字隱藏"
-            android:id="@+id/hidecheckBox"
-            android:layout_weight="0.05"
-            android:onClick="putcheckbok" />
+            android:layout_weight="0.05">
 
-        <Button
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:layout_width="307dp"
+                android:layout_height="wrap_content"
+                android:text="文字隱藏"
+                android:id="@+id/hidecheckBox"
+                android:layout_weight="0.05"
+                android:onClick="putcheckbok"
+                android:checked="false" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="物件隱藏"
+                android:id="@+id/button4"
+                android:onClick="tohidecheobjace" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="submit"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.05"
-            android:onClick="submit" />
+            android:layout_weight="0.05">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_submit"
+                android:id="@+id/button"
+                android:layout_weight="0.05"
+                android:onClick="submit" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_nextpage"
+                android:id="@+id/button2"
+                android:layout_weight="0.05"
+                android:onClick="nexttopage"
+                 />
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/historyListView"
-            android:layout_gravity="center_horizontal"      />
+            android:layout_gravity="center_horizontal"  />
+
+
     </LinearLayout>
 
     <Spinner
@@ -102,6 +135,8 @@
         android:layout_toRightOf="@+id/input"
         android:layout_toEndOf="@+id/input"
         android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp" />
+        android:layout_marginStart="21dp"
+
+        />
 
 </RelativeLayout>

@@ -1,11 +1,18 @@
 package com.example.user.simeplui;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     private Spinner  storeInfoSpinner ; //建立Spinner 物件
 
 
+    String[] data ;
+
+    //log
+    private static final String TAG = "Bmi";
+
     //用途儲存私有的簡單資料在鍵-值配對 簡單存放到的編輯
     private SharedPreferences sharedPreferences; // 轻量级的存储类的物件
     private SharedPreferences.Editor editor; // 用來編輯轻量级的存储类的物件
@@ -31,11 +43,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);// 指定layout檔
 
+        ActivityManager activityManager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+        activityManager.getMemoryClass();
+
         //
         edittext = (EditText)findViewById(R.id.input); //    物件轉換，透過viwe的findViewById，尋找Ｒ.的ID.的名稱(ＮＡＭＥ)，可能控制此物件
         hideCheckBox = (CheckBox)findViewById(R.id.hidecheckBox);
         historyListView = (ListView)findViewById(R.id.historyListView);
         storeInfoSpinner = (Spinner)findViewById(R.id.storeInofSpinner);
+
+
+        checkModify();
+
 
         sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
         /* 第一個參數 放置檔名 ,手機本機端(DATA\DATA\APP 專案名稱\Shared_Prefs)
@@ -50,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit(); // 將原本資料提交SharedPreferences的的編輯器用
 
 
-        //edittext.setText("GO input any word"); // 設定指定文字
+        edittext.setText("GO input any word"); // 設定指定文字
 
-        edittext.setText(sharedPreferences.getString("edittext", ""));//指定key從存储类載出資料
+        edittext.setText(sharedPreferences.getString("edittext", " "));//指定key從存储类載出資料
         /** 資料的取出動作
          *  第一個參數 取得放置key物件名稱並取出之前資料 第二參數 如果取出key物件沒有任何資料的話，必須指定預設資訊文字
         **/
@@ -75,10 +94,62 @@ public class MainActivity extends AppCompatActivity {
           //sethistry();
 
         setStoreIofo();
+
+
+        storeInfoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(MainActivity.this, "你選的是"+data[position], Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+                Toast.makeText(MainActivity.this,"沒有動作", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+
+    public void onStart() {
+        super.onStart();
+        Log.v(TAG,"onStart_MainActivity");
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.v(TAG,"onResume_MainActivity");
+    }
+
+    public void onPause()
+    {
+        super.onPause();
+        Log.v(TAG,"onPause_MainActivity");
+    }
+
+    public void onStop() {
+        super.onStop();
+        Log.v(TAG,"onStop_MainActivity");
+    }
+
+    public void onRestart()
+    {
+        super.onRestart();
+        Log.v(TAG,"onReStart");
+    }
+
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Log.v(TAG,"onDestroy_MainActivity");
     }
 
     // 定義顯示在ListView的列表上
-    private void sethistry(){
+    private void sethistry() {
         //String[] data = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String[] data = Utils.readFile(this,"history.txt").split("\n"); //字尾有＼Ｎ就會分行
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, data);
@@ -87,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     //
     private  void  setStoreIofo(){
-        String[] data = getResources().getStringArray(R.array.storeInfo); // 如果你的附屬檔案放置在(res)必須呼叫getResources()
+        data = getResources().getStringArray(R.array.storeInfo); // 如果你的附屬檔案放置在(res)必須呼叫getResources()
         ArrayAdapter<String> stroeadapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,data);
         storeInfoSpinner.setAdapter(stroeadapter);
     }
@@ -213,6 +284,9 @@ public class MainActivity extends AppCompatActivity {
 */
     }
 
+    /*
+     * 這是呼叫 checkbox 物件 動作
+     */
     public void putcheckbok(View view){
 
         if(hideCheckBox.isChecked()){
@@ -225,5 +299,72 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
 
     }
+
+
+    /*
+    * 這是呼叫 物件進行另一個頁面活動
+    */
+    public void nexttopage(View view){
+
+        //setContentView(R.layout.activity_drink_menu);
+        /*
+        *  表明的意圖 單向開啟動作
+        */
+        MainActivity.this.getApplicationContext();
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, DrinkMenuActivity.class); // 表明前往地方 CONtext(資源 權限) 前往的Activity
+        //startActivity(intent);//進行單向開啟動作 DrinkMenuActivity
+        startActivityForResult(intent, 0); //進行雙向動作 DrinkMenuActivity
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        switch (resultCode) {
+            case RESULT_OK:
+                Bundle bunde = data.getExtras();
+                String Json_String = bunde.getString("JSON");
+                Toast.makeText(this, Json_String ,Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+
+    public void tohidecheobjace(View view){
+        int intest = storeInfoSpinner.getVisibility();
+        String strin_int ;
+        strin_int = String.valueOf(intest);
+        Toast.makeText(this,strin_int,Toast.LENGTH_LONG).show();
+
+        if(intest == 0 ){
+        storeInfoSpinner.setVisibility(view.INVISIBLE);
+        }else if(intest == 4){
+            storeInfoSpinner.setVisibility(view.VISIBLE);
+        }
+        /*else if(intest == 8){
+            storeInfoSpinner.setVisibility(view.GONE);
+        }*/
+
+    }
+
+    private boolean checkModify()
+    {
+        ApplicationInfo localApplicationInfo = getApplicationInfo();
+        Log.v("MainActivity", "manageSpaceActivityName: " + localApplicationInfo.manageSpaceActivityName);
+        Log.v("MainActivity", "nativeLibraryDir: " + localApplicationInfo.nativeLibraryDir);
+        Log.v("MainActivity", "processName: " + localApplicationInfo.processName);
+        Log.v("MainActivity", "publicSourceDir: " + localApplicationInfo.publicSourceDir);
+        Log.v("MainActivity", "sourceDir: " + localApplicationInfo.sourceDir);
+        String str1 = getPackageCodePath();
+        Log.v("MainActivity", "getPackageCodePath: " + str1);
+        String str2 = "";
+        String[] arrayOfString;
+        return false;
+    }
+
 
 }

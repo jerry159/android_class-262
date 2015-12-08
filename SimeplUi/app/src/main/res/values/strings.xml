@@ -4,4 +4,10 @@
     <string name="onswitch">open</string>
     <string name="offswitch">close</string>
     <string name="title_activity_drink_menu">DrinkMenuActivity</string>
+    <string name="button_submit">submit</string>
+    <string name="button_nextpage">showstoreInof</string>
+    <string name="button_stop">buttoninstop</string>
+    <string name="button_close">buttoninclose</string>
+    <string name="button_ok">buttonisok</string>
+    <string name="wdwq">111</string>
 </resources>

@@ -3,5 +3,9 @@
 
     <string name="app_name">你好 SimeplUi</string>
     <string name="go1">好簡單 SimeplUi</string>
-
+    <string name="button_submit">送出結果</string>
+    <string name="button_nextpage">店家資訊</string>
+    <string name="button_stop">暫停</string>
+    <string name="button_close">關閉</string>
+    <string name="button_ok">確定</string>
 </resources>

@@ -66,7 +66,7 @@ public class Utils {
         }
 
 
-        return null;
+        return "";
     }
 
 }
