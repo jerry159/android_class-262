@@ -18,4 +18,37 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/staticMapImage"
+        android:layout_below="@+id/address"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@android:mipmap/sym_def_app_icon" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Switch"
+        android:id="@+id/map_switch3"
+        android:checked="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        android:layout_alignTop="@+id/staticMapImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map" />
 </RelativeLayout>

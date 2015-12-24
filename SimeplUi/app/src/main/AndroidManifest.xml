@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 使用網路狀態權限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--  -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!--  -->
     <application
@@ -28,6 +30,13 @@
             android:value="wnZqlP6AbsRJPq1XoZUDI1BKFfUZJghHbUc9n0s1" />
         <!-- 參數設定 -->
 
+        <!-- google map api KEY 參數設定 -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAAl8CLshtBfbfQ3foZWPTe2eYesRenFGg" />
+
+        <!-- google map api KEY 參數設定 -->
+
         <activity android:name=".MainActivity">
             //主程式程式開始地方
             <intent-filter>
@@ -46,6 +55,11 @@
             android:label="@string/title_activity_order_detail"
             android:theme="@style/AppTheme">
         </activity>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

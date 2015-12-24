@@ -119,7 +119,7 @@ public class Utils {
 
     }
 
-    // 抓取GOOGLE MAP URL取得JSON的資訊
+    // 抓取網路動作的資訊
     public static byte[] urlToBytes(String urlString){
         try {
             URL url = new URL(urlString);
@@ -181,6 +181,12 @@ public class Utils {
         return null;
     }
 
+    public static String getStaticMapUrl(double[] latLng, int zoom) {
+
+        String center = latLng[0] + "," + latLng[1];
+        String url = "https://maps.googleapis.com/maps/api/staticmap?center=" + center + "&zoom=" + zoom + "&size=640x400";
+        return url;
+    }
 
 
     public static double[] addressToLatLng(String address) {
