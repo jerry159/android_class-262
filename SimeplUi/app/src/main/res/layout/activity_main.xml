@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+
+android:layout_alignLeft 那邊物件右邊
+android:layout_below 那一個物件下方
+android:layout_alignRight 那一個物件左邊
+
+-->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -52,6 +60,14 @@
         android:weightSum="1"
         >
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.05"
+            android:layout_centerHorizontal="true"/>
+
         <Switch
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,6 +101,11 @@
                 android:layout_weight="0.05"
                 android:onClick="putcheckbok"
                 android:checked="false" />
+
+            <ImageView
+                android:layout_width="10px"
+                android:layout_height="10px"
+                android:id="@+id/photo" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -122,7 +143,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/historyListView"
-            android:layout_gravity="center_horizontal"  />
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:visibility="gone"
+            />
 
 
     </LinearLayout>

@@ -24,12 +24,12 @@ public class DrinkMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drink_menu);
 
-        buttonbacktopage = (Button)findViewById(R.id.button3);
+        buttonbacktopage = (Button)findViewById(R.id.button9);
         buttonbacktopage.setText("done", TextView.BufferType.NORMAL);
         buttonbacktopage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toto(v);
+                done(v);
             }
         });
 
@@ -73,15 +73,18 @@ public class DrinkMenuActivity extends AppCompatActivity {
     }
 
 
-    public void toto(View view){
+
+    public void done(View view){
+
+
 
         //setContentView(R.layout.activity_main);
-        Bundle bundle = new Bundle();
+       // Bundle bundle = new Bundle();
         Intent intent = new Intent();
         intent.setClass(DrinkMenuActivity.this, MainActivity.class);
-        bundle.putString("JSON", getdata().toString());
-        intent.putExtras(bundle);
-        DrinkMenuActivity.this.setResult(RESULT_OK, intent);
+        //bundle.putString("JSON", getdata().toString());  // 索引值的名稱 / 放置資料
+        intent.putExtra("JSON", getdata().toString());
+        DrinkMenuActivity.this.setResult(RESULT_OK, intent); // 回傳狀態是什麼 可以在這邊進行表示 /你想帶什麼資料回來傳遞
         DrinkMenuActivity.this.finish();
         //startActivity(intent);
         //Toast.makeText(this, "GOGOG", Toast.LENGTH_LONG).show();
@@ -129,6 +132,11 @@ public class DrinkMenuActivity extends AppCompatActivity {
 
 
     /*
+    * 要如何將物件資料快速取得，進行將取得資料封裝可以簡易辨識方式呢
+    * 以前是使用XML格式但是在制定XML格式協作時候需要統一方式製作 閱讀會有困難
+    * 如果使用JSON格式簡單辨識 對應方式簡單 定義方式簡單 不需要定義統一方式製作
+    * google chrome 下指令方式 建置JSON 非常簡單
+    *
     * [{"name":"black  tea","l": "1","m":"2"},{"name":"mail tea","l": "1","m":"2"},{"name":"green tea","l": "1","m":"2"}]
     */
     public JSONArray getdata(){
@@ -138,21 +146,24 @@ public class DrinkMenuActivity extends AppCompatActivity {
 
         JSONArray array = new JSONArray();// 建立最大JSON 陣列
 
+
+        // 取出root 每一列的孩子LinearLayout物件出來
         for(int i = 0 ; i < count -1 ; i++){
             LinearLayout ll = (LinearLayout)rootLinearLayout.getChildAt(i);
             TextView drinkNameTextView = (TextView)ll.getChildAt(0);
             Button lButton = (Button)ll.getChildAt(1);
             Button mButton = (Button)ll.getChildAt(2);
 
+            // 取出i列的物件出來
             String drinkName = drinkNameTextView.getText().toString();
             int lNumber = Integer.parseInt(lButton.getText().toString());
             int mNumber = Integer.parseInt(mButton.getText().toString());
 
             try {
                 JSONObject  object = new JSONObject(); // 放置每個物件資料
-                object.put("neme",drinkName);
-                object.put("l",lNumber);
-                object.put("m",mNumber);
+                object.put("name", drinkName);
+                object.put("l", lNumber);
+                object.put("m", mNumber);
                 array.put(object);
             } catch (JSONException e) {
                 e.printStackTrace();

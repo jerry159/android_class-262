@@ -1,11 +1,25 @@
 package com.example.user.simeplui;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 /**
  * Created by jerry on 2015/12/1.
@@ -55,7 +69,7 @@ public class Utils {
 
             byte[] buffer = new byte[1204];
             FileInputStream fis = context.openFileInput(fileName);
-            fis.read(buffer,0,buffer.length);
+            fis.read(buffer, 0, buffer.length);
             fis.close();
             return new String(buffer);
 
@@ -67,6 +81,113 @@ public class Utils {
 
 
         return "";
+    }
+
+
+    //uri 識別證表示檔案 放置地方
+    public static Uri getPhotoUri(){
+        File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        if(dir.exists()== false){
+            dir.mkdir();
+        }
+        File file =new File(dir,"simpeeui_photo.png");
+        return Uri.fromFile(file);
+    }
+
+
+    // 取得檔案對應的URL檔
+    public  static byte[] urlToByte(Context context , Uri uri){
+
+        try {
+            InputStream is = context.getContentResolver().openInputStream(uri); // 取得檔案
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();// 輸出用字元陣列表示
+            byte[] buffer = new byte[1024];
+            int len = 0 ;
+            while ((len = is.read()) != -1){
+               baos.write(buffer,0,len);
+            }
+
+            return baos.toByteArray();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null ;
+
+    }
+
+    // 抓取GOOGLE MAP URL取得JSON的資訊
+    public static byte[] urlToBytes(String urlString){
+        try {
+            URL url = new URL(urlString);
+            URLConnection connection = url.openConnection();
+            InputStream is = connection.getInputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while((len = is.read(buffer)) != -1){
+                baos.write(buffer, 0, len);
+            }
+
+            return baos.toByteArray();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getGeoCodingUrl(String address) {
+        try {
+            address = URLEncoder.encode(address, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String url ="https://maps.googleapis.com/maps/api/geocode/json?address=" + address;
+
+        return url;
+    }
+
+    public static double[] getLatLngFromJsonString(String jsonString) {
+        try {
+            JSONObject object = new JSONObject(jsonString);
+
+            JSONObject locationObject = object.getJSONArray("results")
+                    .getJSONObject(0)
+                    .getJSONObject("geometry")
+                    .getJSONObject("location");
+
+            JSONObject formatted_address_Object = object.getJSONArray("results").getJSONObject(0);
+            JSONObject address_components_Object = object.getJSONArray("results").getJSONObject(0).getJSONArray("address_components").getJSONObject(0);
+
+
+            Log.d("debug", formatted_address_Object.get("formatted_address").toString());
+                       Log.d("debug", address_components_Object.getString("long_name")+":"+address_components_Object.getString("short_name")+":"+address_components_Object.getString("types"));
+
+            double lat = locationObject.getDouble("lat");
+            double lng = locationObject.getDouble("lng");
+
+            return new double[]{lat, lng};
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public static double[] addressToLatLng(String address) {
+        String url = Utils.getGeoCodingUrl(address);
+        byte[] bytes = Utils.urlToBytes(url);
+        String result = new String(bytes);
+        return Utils.getLatLngFromJsonString(result);
     }
 
 }

@@ -10,4 +10,5 @@
     <string name="button_close">buttoninclose</string>
     <string name="button_ok">buttonisok</string>
     <string name="wdwq">111</string>
+    <string name="title_activity_order_detail">OrderDetailActivity</string>
 </resources>
